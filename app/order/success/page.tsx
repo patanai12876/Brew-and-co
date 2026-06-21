@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+export const dynamic = 'force-dynamic';
+
 interface OrderDetails {
   id: string;
   totalPrice: number;
