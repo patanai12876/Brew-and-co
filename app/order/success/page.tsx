@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-
-export const dynamic = 'force-dynamic';
+import { useEffect, useState, Suspense } from "react";
 
 interface OrderDetails {
   id: string;
@@ -30,7 +28,7 @@ const colors = {
   border: "#E8E4DC",
 };
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
@@ -308,5 +306,13 @@ export default function OrderSuccessPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function OrderSuccessPage() {
+  return (
+    <Suspense fallback={<div style={{ background: "#F8F6F1", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}><p>Loading...</p></div>}>
+      <OrderSuccessContent />
+    </Suspense>
   );
 }
