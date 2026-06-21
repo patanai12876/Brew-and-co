@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 interface MenuItem {
@@ -26,12 +26,26 @@ const stagger = {
 
 export default function HomePage() {
   const [bestsellers, setBestsellers] = useState<MenuItem[]>([]);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     fetch("/api/menu?limit=3")
       .then((r) => r.json())
       .then((d) => { if (d.success) setBestsellers(d.data); })
       .catch(console.error);
+  }, []);
+
+  // Force video playback
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          console.log("Autoplay prevented, video will play on user interaction");
+        });
+      }
+    }
   }, []);
 
   return (
@@ -49,6 +63,7 @@ export default function HomePage() {
 
   {/* Background Video */}
   <video
+    ref={videoRef}
     autoPlay
     muted
     loop
