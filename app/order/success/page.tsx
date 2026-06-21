@@ -51,14 +51,6 @@ export default function OrderSuccessPage() {
     }
   }, [orderId]);
 
-  const checkmarkVariants = {
-    hidden: { pathLength: 0 },
-    visible: {
-      pathLength: 1,
-      transition: { duration: 0.8, ease: "easeInOut" },
-    },
-  };
-
   const fadeUp = {
     hidden: { opacity: 0, y: 24 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -96,9 +88,9 @@ export default function OrderSuccessPage() {
             strokeLinejoin="round"
           >
             <motion.path
-              variants={checkmarkVariants}
-              initial="hidden"
-              animate="visible"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
               d="M 20 50 L 40 70 L 80 30"
             />
           </motion.svg>
