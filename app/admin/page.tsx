@@ -28,6 +28,8 @@ const colors = {
   accent: "#7B9E74",
   accentDark: "#4A6741",
   text: "#1E1E1E",
+  textMid: "#4A4A45",
+  textMuted: "#8A8A80",
   muted: "#8A8A80",
   border: "#E8E4DC",
 };
