@@ -39,12 +39,25 @@ export default function HomePage() {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          console.log("Autoplay prevented, video will play on user interaction");
-        });
+      // Wait for video to be ready
+      const handleCanPlay = () => {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            console.log("Autoplay prevented");
+          });
+        }
+      };
+
+      if (video.readyState >= 2) {
+        handleCanPlay();
+      } else {
+        video.addEventListener("canplay", handleCanPlay, { once: true });
       }
+
+      return () => {
+        video.removeEventListener("canplay", handleCanPlay);
+      };
     }
   }, []);
 
@@ -68,6 +81,7 @@ export default function HomePage() {
     muted
     loop
     playsInline
+    preload="metadata"
     style={{
       position: "absolute",
       inset: 0,
@@ -76,6 +90,7 @@ export default function HomePage() {
       objectFit: "cover",
       zIndex: 0,
     }}
+    onError={() => console.log("Video failed to load")}
   >
     <source src="/video.mp4" type="video/mp4" />
   </video>
