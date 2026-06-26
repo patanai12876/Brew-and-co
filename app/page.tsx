@@ -92,7 +92,7 @@ export default function HomePage() {
     }}
     onError={() => console.log("Video failed to load")}
   >
-    <source src="/video.mp4" type="video/mp4" />
+    <source src="/video2.mp4" type="video/mp4" />
   </video>
 
   {/* Dark overlay — video ke upar */}
